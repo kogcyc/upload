@@ -26,4 +26,5 @@ def upload():
         return jsonify({'error': 'No file provided'})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
+
