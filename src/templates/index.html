@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload</title>
+</head>
+<body>
+
+<span style="font-size: 6em;">📷</span>
+
+<form id="uploadForm" enctype="multipart/form-data">
+    <label for="fileInput">Select an image:</label>
+    <input type="file" id="fileInput" name="file" accept="image/*">
+    <br>
+    <button type="button" onclick="uploadImage()">Upload Image</button>
+</form>
+
+<script>
+    let selectedFile;
+
+    // Function to handle file selection
+    document.getElementById('fileInput').addEventListener('change', function(event) {
+        selectedFile = event.target.files[0];
+    });
+
+    // Function to handle image upload
+    function uploadImage() {
+        if (selectedFile) {
+            const formData = new FormData();
+            formData.append('file', selectedFile);
+
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log('Image uploaded:', data);
+            })
+            .catch(error => {
+                console.error('Error uploading image:', error);
+            });
+        } else {
+            console.error('No file selected.');
+        }
+    }
+</script>
+
+</body>
+</html>
